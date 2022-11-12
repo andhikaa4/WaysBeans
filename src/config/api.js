@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://localhost:5000/api/v1/",
+  baseURL: "https://chubby-bikes-cough-182-253-250-106.loca.lt/api/v1/",
 });
 
 export const setAuthToken = (token) => {

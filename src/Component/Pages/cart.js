@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ImageProduct from '../Image/product1.png'
 import Bin from '../Image/bin.png'
 import { API } from '../../config/api';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import EmptyCart from '../Image/emptyCart.png'
@@ -46,10 +46,70 @@ function Cart(props) {
     const allCartPrice = cartData?.map((item) => item.product.price * item.qty);
     const subTotal = allCartPrice?.reduce((a, b) => a + b, 0);
 
+
+    const cart = cartData?.map(item => item.product_id)
+
     useEffect(() => {
         refetch();
     }, [state]);
     const qty = cartData?.map(p => p.qty).reduce((a, b) => a += b, 0)
+
+    useEffect(() => {
+        const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+        const myMidtransClientKey = "SB-Mid-client-3lIkwrbMzDoEDNpD";
+    
+        let scriptTag = document.createElement("script");
+        scriptTag.src = midtransScriptUrl;
+
+        scriptTag.setAttribute("data-client-key", myMidtransClientKey);
+    
+        document.body.appendChild(scriptTag);
+        return () => {
+          document.body.removeChild(scriptTag);
+        };
+      }, []);
+
+      const handleBuy = useMutation(async () => {
+        try {
+
+          const formData = new FormData();
+          formData.set("price", subTotal);
+          formData.set("product_id", cart);
+
+          const config = {
+            method: "POST",
+            headers: {
+              Authorization: "Basic " + localStorage.token,
+              "Content-type": "application/json",
+            }
+          };
+    
+          const response = await API.post("/transaction",formData, config);
+    
+          const token = response.data.token;
+          console.log(response.data);
+    
+          window.snap.pay(token, {
+            onSuccess: function (result) {
+              console.log(result);
+              navigate("/profile/" + state.user.id);
+            },
+            onPending: function (result) {
+              console.log(result);
+              navigate("/profile/" + state.user.id);
+            },
+            onError: function (result) {
+              console.log(result);
+            },
+            onClose: function () {
+              alert("you closed the popup without finishing the payment");
+            },
+          });
+    
+        } catch (error) {
+          console.log(error);
+        }
+      });
 
     return (
         <div className='container px-5'>
@@ -137,7 +197,7 @@ function Cart(props) {
 
                         </div>
 
-                        <button className='btn btn-success w-100 mt-3' type="">Pay</button>
+                        <button className='btn btn-success w-100 mt-3' type="" onClick={() => handleBuy.mutate()} >Order</button>
                     </div>
                 </div>  
                  
