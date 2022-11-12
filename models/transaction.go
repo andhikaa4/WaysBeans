@@ -18,6 +18,7 @@ type Cart struct {
 	Product   []Product          `json:"product"  gorm:"many2many:product_cart"`
 	ProductID []int              `json:"product_id" form:"product_id" gorm:"type:int"`
 	Qty       int                `json:"qty" `
+	Price     int                `json:"price" `
 }
 
 type CartResponse struct {
