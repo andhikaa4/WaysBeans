@@ -1,17 +1,19 @@
 package handlers
 
 import (
+	"context"
 	"encoding/json"
 	productdto "final-task/dto/product"
 	dto "final-task/dto/result"
 	"final-task/models"
 	"final-task/repositories"
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
 
-	// "github.com/cloudinary/cloudinary-go/v2"
-	// "github.com/cloudinary/cloudinary-go/v2/api/uploader"
+	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
@@ -99,25 +101,25 @@ func (h *handlerProduct) CreateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// var ctx = context.Background()
-	// var CLOUD_NAME = os.Getenv("CLOUD_NAME")
-	// var API_KEY = os.Getenv("API_KEY")
-	// var API_SECRET = os.Getenv("API_SECRET")
+	var ctx = context.Background()
+	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+	var API_KEY = os.Getenv("API_KEY")
+	var API_SECRET = os.Getenv("API_SECRET")
 
-	// cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
-	// // Upload file to Cloudinary ...
-	// resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "dumbmerch"})
+	// Upload file to Cloudinary ...
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "Waysbean"})
 
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// }
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
 	product := models.Product{
 		Name:  request.Name,
 		Desc:  request.Desc,
 		Price: request.Price,
-		Image: filepath,
+		Image: resp.SecureURL,
 		Stock: request.Stock,
 	}
 
