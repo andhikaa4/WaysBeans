@@ -156,6 +156,20 @@ func (h *handlerProduct) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 		Stock: stock,
 	}
 
+	var ctx = context.Background()
+	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+	var API_KEY = os.Getenv("API_KEY")
+	var API_SECRET = os.Getenv("API_SECRET")
+
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+
+	// Upload file to Cloudinary ...
+	resp, err := cld.Upload.Upload(ctx, filename, uploader.UploadParams{Folder: "Waysbean"})
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
 	product := models.Product{}
@@ -171,7 +185,7 @@ func (h *handlerProduct) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	if request.Price != 0 {
 		product.Price = request.Price
 	}
-	if filename != "" {
+	if resp.SecureURL != "" {
 		product.Image = filename
 	}
 	if request.Stock != 0 {
