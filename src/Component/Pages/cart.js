@@ -83,13 +83,12 @@ function Cart(props) {
             headers: {
               Authorization: "Basic " + localStorage.token,
               "Content-type": "application/json",
-            }, formData
+            }
           };
     
-          const response = await API.post("/transaction", config);
+          const response = await API.post("/transaction", formData,config);
     
           const token = response.data.token;
-          console.log(response.data);
           console.log(formData);
     
           window.snap.pay(token, {
