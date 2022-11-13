@@ -82,7 +82,7 @@ function Cart(props) {
           const response = await API.post("/transaction", formData);
     
           const token = response.data.token;
-          console.log(formData);
+          console.log(response);
     
           window.snap.pay(token, {
             onSuccess: function (result) {
