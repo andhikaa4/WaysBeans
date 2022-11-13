@@ -185,8 +185,8 @@ func (h *handlerProduct) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	if request.Price != 0 {
 		product.Price = request.Price
 	}
-	if resp.SecureURL != "" {
-		product.Image = filename
+	if filename != "" {
+		product.Image = resp.SecureURL
 	}
 	if request.Stock != 0 {
 		product.Stock = request.Stock
