@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Logo from '../Image/Waysbean.png'
 import imageHome from '../Image/imageHome.png'
 import Waves from '../Image/Waves.png'
@@ -6,8 +6,11 @@ import Product1 from '../Image/product1.png'
 import { Link, useParams } from 'react-router-dom'
 import {API} from '../../config/api'
 import {useQuery} from 'react-query'
+import { UserContext } from '../context/UserContext'
 
 function Home() {
+
+    const [state] = useContext(UserContext)
 
     const [products,setProducts] = useState()
 
@@ -24,7 +27,7 @@ function Home() {
 
     useEffect((e) =>{
         getData()
-    },[products])
+    },[state])
 
     return (
         <div className='container px-5'  >
