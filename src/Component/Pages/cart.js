@@ -76,18 +76,21 @@ function Cart(props) {
           formData.set("price", subTotal);
           formData.set("product_id", cart);
 
+          
+
           const config = {
             method: "POST",
             headers: {
               Authorization: "Basic " + localStorage.token,
               "Content-type": "application/json",
-            }
+            }, formData
           };
     
-          const response = await API.post("/transaction",formData, config);
+          const response = await API.post("/transaction", config);
     
           const token = response.data.token;
           console.log(response.data);
+          console.log(formData);
     
           window.snap.pay(token, {
             onSuccess: function (result) {
