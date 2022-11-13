@@ -48,6 +48,8 @@ function Cart(props) {
 
 
     const cart = cartData?.map(item => item.product_id)
+    console.log(cart);
+    console.log(subTotal);
 
     useEffect(() => {
         refetch();
@@ -75,18 +77,9 @@ function Cart(props) {
           const formData = new FormData();
           formData.set("price", subTotal);
           formData.set("product_id", cart);
-
-          
-
-          const config = {
-            method: "POST",
-            headers: {
-              Authorization: "Basic " + localStorage.token,
-              "Content-type": "application/json",
-            }
-          };
+       
     
-          const response = await API.post("/transaction", formData,config);
+          const response = await API.post("/transaction", formData);
     
           const token = response.data.token;
           console.log(formData);
