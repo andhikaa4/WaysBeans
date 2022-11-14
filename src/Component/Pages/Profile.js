@@ -21,8 +21,18 @@ function Profile() {
         }
     });
 
+    const { data: transaction, refetch: trx } = useQuery("trxCache", async () => {
+        try {
+            const response = await API.get(`/transactions`);
+            return response.data.data;
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
     useEffect(() =>{
         refetch()
+        trx()
     },[])
     return (
         <div className='container px-5'>
@@ -45,19 +55,20 @@ function Profile() {
                     <div className='col-6'>
                         <h3>My Transaction</h3>
                         <div className='overflow-auto' style={{height:"400px"}}>
-                            <div className='d-flex p-2 mb-3' style={{ backgroundColor: "#F6E6DA" }}>
+                            {transaction?.map((item) => (
+                                <div className='d-flex p-2 mb-3' style={{ backgroundColor: "#F6E6DA" }}>
                                 <div className='w-75'>
                                     <div className='d-flex' style={{ maxWidth: "100%" }}>
                                         <div style={{ maxWidth: "20%" }} className='me-2'>
-                                            <img style={{ width: "100%", height: "auto" }} src={ImageProduct} />
+                                            <img style={{ width: "100%", height: "auto" }} src={item.product.image} />
 
                                         </div>
                                         <div className=' w-50'>
-                                            <p className='fw-bold m-0' style={{ fontSize: "12px" }}>GUETEMALA Beans</p>
+                                            <p className='fw-bold m-0' style={{ fontSize: "12px" }}>{item.product.name}</p>
                                             <p className=' m-0 mb-2' style={{ fontSize: "10px" }}> <b>Saturday</b> ,5 March 2020</p>
-                                            <p className='m-0' style={{ fontSize: "10px" }}>Price : Rp.300.900</p>
+                                            <p className='m-0' style={{ fontSize: "10px" }}>Price : {item.product.price}</p>
                                             <p className='m-0' style={{ fontSize: "10px" }}>Qty : 2</p>
-                                            <p className='m-0 fw-bold' style={{ fontSize: "10px" }}>Sub Total : 601.800</p>
+                                            <p className='m-0 fw-bold' style={{ fontSize: "10px" }}>Sub Total :{item.price}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -75,6 +86,8 @@ function Profile() {
                                 </div>
 
                             </div>
+                            ))}
+                            
                         </div>
 
                     </div>
