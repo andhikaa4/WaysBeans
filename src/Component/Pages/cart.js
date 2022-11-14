@@ -52,6 +52,7 @@ function Cart(props) {
 
 
     const cart = cartData?.map(item => item.product_id)
+    console.log(cartData?.product_id);
 
 
     useEffect(() => {
