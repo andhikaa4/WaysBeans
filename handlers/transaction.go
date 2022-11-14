@@ -254,7 +254,9 @@ func (h *handlerTransaction) Notification(w http.ResponseWriter, r *http.Request
 		if fraudStatus == "challenge" {
 			// TODO set transaction status on your database to 'challenge'
 			// e.g: 'Payment status challenged. Please take action on your Merchant Administration Portal
+			SendMail("pending", transaction)
 			h.TransactionRepository.UpdateTransaction2("pending", orderId)
+
 		} else if fraudStatus == "accept" {
 			// TODO set transaction status on your database to 'success'
 			SendMail("success", transaction)
@@ -276,6 +278,7 @@ func (h *handlerTransaction) Notification(w http.ResponseWriter, r *http.Request
 	} else if transactionStatus == "pending" {
 		// TODO set transaction status on your databaase to 'pending' / waiting payment
 		h.TransactionRepository.UpdateTransaction2("pending", orderId)
+		SendMail("pending", transaction)
 	}
 
 	w.WriteHeader(http.StatusOK)
