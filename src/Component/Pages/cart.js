@@ -10,7 +10,7 @@ import EmptyCart from '../Image/emptyCart.png'
 function Cart(props) {
     const navigate = useNavigate()
     const [state] = useContext(UserContext)
-    const [cart2, setCart2] = useState([])
+    const [cart2, setCart2] = useState({})
     console.log(cart2);
 
     const { data: cartData, refetch } = useQuery("cartCache", async () => {
