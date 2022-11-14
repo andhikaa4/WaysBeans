@@ -79,7 +79,7 @@ function Profile() {
                                     </div>
                                     <img className='mx-auto mb-1' src={QR} style={{ width: "30%", display: "block" }} />
                                     <div className='w-100 bg-success rounded'>
-                                        <p className='mx-auto text-center text-white mb-0'> Status</p>
+                                        <p className='mx-auto text-center text-white mb-0'> {item.status}</p>
 
                                     </div>
 
