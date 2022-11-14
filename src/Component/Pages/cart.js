@@ -47,7 +47,7 @@ function Cart(props) {
     const subTotal = allCartPrice?.reduce((a, b) => a + b, 0);
 
 
-    const cart = cartData?.map(item => item.product_id)
+    const cart = cartData?.map(item => item.product_id).map
     console.log(cart);
     console.log(subTotal);
 
