@@ -66,9 +66,9 @@ function Profile() {
 
                                         </div>
                                         <div className=' w-50'>
-                                            <p className='fw-bold m-0' style={{ fontSize: "12px" }}>{item.product.name}</p>
+                                            <p className='fw-bold m-0' style={{ fontSize: "12px" }}>{item.product[0].name}</p>
                                             <p className=' m-0 mb-2' style={{ fontSize: "10px" }}> <b>Saturday</b> ,5 March 2020</p>
-                                            <p className='m-0' style={{ fontSize: "10px" }}>Price : {item.product.price}</p>
+                                            <p className='m-0' style={{ fontSize: "10px" }}>Price : {item.product[0].price}</p>
                                             <p className='m-0' style={{ fontSize: "10px" }}>Qty : 2</p>
                                             <p className='m-0 fw-bold' style={{ fontSize: "10px" }}>Sub Total :{item.price}</p>
                                         </div>
