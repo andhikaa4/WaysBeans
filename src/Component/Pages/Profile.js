@@ -30,6 +30,8 @@ function Profile() {
         }
     });
 
+    console.log(transaction);
+
     useEffect(() =>{
         refetch()
         trx()
