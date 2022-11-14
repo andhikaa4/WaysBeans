@@ -47,9 +47,12 @@ function Cart(props) {
     const subTotal = allCartPrice?.reduce((a, b) => a + b, 0);
 
 
-    const cart = cartData?.map(item => item.product_id).map
+    const cart = cartData?.map(item => item.product_id)
     console.log(cart);
     console.log(subTotal);
+    const cart2 = cartData?.forEach((item) => item.product_id)
+    console.log("ini cart 2" , cart2);
+
 
     useEffect(() => {
         refetch();
