@@ -10,10 +10,14 @@ import EmptyCart from '../Image/emptyCart.png'
 function Cart(props) {
     const navigate = useNavigate()
     const [state] = useContext(UserContext)
+    const [cart2, setCart2] = useState()
+    console.log(cart2);
 
     const { data: cartData, refetch } = useQuery("cartCache", async () => {
         try {
             const response = await API.get("/carts");
+            const cart = response.data.data.map(item => item.product_id)
+            setCart2(cart)
             return response.data.data;
         } catch (error) {
             console.log(error);
@@ -48,10 +52,6 @@ function Cart(props) {
 
 
     const cart = cartData?.map(item => item.product_id)
-    console.log(cart);
-    console.log(subTotal);
-    const cart2 = cartData?.forEach((item) => item.product_id)
-    console.log("ini cart 2" , cart2);
 
 
     useEffect(() => {
