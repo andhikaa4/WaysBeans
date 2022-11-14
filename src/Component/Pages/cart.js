@@ -79,7 +79,7 @@ function Cart(props) {
 
           const formData = new FormData();
           formData.set("price", subTotal);
-          formData.set("product_id", cart);
+          formData.set("product_id", cart2);
        
     
           const response = await API.post("/transaction", formData);
