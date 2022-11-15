@@ -45,16 +45,18 @@ function DetailProduct(props) {
                 <div className='col-6 ' >
                     <img className='mx-auto' style={{width:"100%", maxHeight:"500px" ,display:"block" }} src={products?.image} alt=""/>
                 </div>
+                    {products !== undefined && (
                 <div className='col-6 py-5'>
                     <h2>{products?.name}</h2>
                     <p>Stock : {products?.stock}</p>
                     <p className='mb-4'>{products?.desc}</p>
                         <p style={{textAlign:"right"}} className='mb-5'>
-                        {toRupiah(products?.price)}
+                        {toRupiah(products?.price, { dot: '.', floatingPoint: 0, Symbol:'IDR' })}
                         </p>
 
                         <button onClick={() => addToCartHandler(id, products?.price)} className='btn btn-success w-100'>Add to Cart</button>
                 </div>
+                        )}
             </div>
         </div>
         
