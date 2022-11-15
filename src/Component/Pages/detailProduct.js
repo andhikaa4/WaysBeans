@@ -3,6 +3,8 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { API } from '../../config/api';
 import ImageProduct from '../Image/product1.png'
+import toRupiah from '@develoka/angka-rupiah-js';
+
 
 function DetailProduct(props) {
     const {id} = useParams()
@@ -48,7 +50,7 @@ function DetailProduct(props) {
                     <p>Stock : {products?.stock}</p>
                     <p className='mb-4'>{products?.desc}</p>
                         <p style={{textAlign:"right"}} className='mb-5'>
-                        {products?.price}
+                        {toRupiah(products?.price, { dot: '.', floatingPoint: 0, Symbol:'IDR' })}
                         </p>
 
                         <button onClick={() => addToCartHandler(id, products?.price)} className='btn btn-success w-100'>Add to Cart</button>

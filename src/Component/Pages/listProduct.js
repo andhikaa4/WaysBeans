@@ -4,6 +4,7 @@ import {API} from '../../config/api'
 import {useQuery} from 'react-query'
 import {UserContext} from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
+import toRupiah from '@develoka/angka-rupiah-js';
 
 
 
@@ -78,7 +79,7 @@ function ListProduct() {
                             {item.stock}
                         </td>
                         <td className='border border-1 border-dark ps-1'>
-                            {item.price}
+                        {toRupiah(item.price, { dot: '.', floatingPoint: 0, Symbol:'IDR' })}
                         </td>
                         <td className='border border-1 text-break w-25 border-dark ps-1'>
                             {item.desc}

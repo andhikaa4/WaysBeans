@@ -6,6 +6,8 @@ import { useMutation, useQuery } from 'react-query';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import EmptyCart from '../Image/emptyCart.png'
+import toRupiah from '@develoka/angka-rupiah-js';
+
 
 function Cart(props) {
     const navigate = useNavigate()
@@ -143,7 +145,7 @@ function Cart(props) {
                                         </div>
                                     </div>
                                     <div className='col-6 d-flex flex-column align-items-end justify-content-center w-25 pe-3'>
-                                        <p>{item.price}</p>
+                                        <p> {toRupiah(item.price, { dot: '.', floatingPoint: 0, Symbol:'IDR' })}</p>
                                         <div>
                                             <a className='pointer' href="" onClick={async () => {
                                                                     const response = await API.delete(
@@ -173,7 +175,7 @@ function Cart(props) {
                                 Subtotal
                             </div>
                             <div className='col-6'>
-                                <p className='text-end' > {subTotal}</p>
+                                <p className='text-end' >  {toRupiah(subTotal, { dot: '.', floatingPoint: 0, Symbol:'IDR' })}</p>
                             </div>
                         </div>
                         <div className='row'>
@@ -190,7 +192,7 @@ function Cart(props) {
                                 Total
                             </div>
                             <div className='col-6'>
-                                <p className='text-end'>{subTotal}</p>
+                                <p className='text-end'>{toRupiah(subTotal, { dot: '.', floatingPoint: 0, Symbol:'IDR' })}</p>
                             </div>
 
                         </div>

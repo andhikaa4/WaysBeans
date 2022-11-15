@@ -7,6 +7,8 @@ import { Link, useParams } from 'react-router-dom'
 import {API} from '../../config/api'
 import {useQuery} from 'react-query'
 import { UserContext } from '../context/UserContext'
+import toRupiah from '@develoka/angka-rupiah-js';
+
 
 function Home() {
 
@@ -67,7 +69,7 @@ function Home() {
                                 <div className='p-3 d-flex flex-column'>
     
                                     <h6 className='me-0'>{item.name}</h6>
-                                    <p className='mb-0 '>{item.price}</p>
+                                    <p className='mb-0 '>{toRupiah(item.price, { dot: '.', floatingPoint: 0, Symbol:'IDR' })}</p>
                                     <p className='mb-0'>Stock : {item.stock}</p>
                                 </div>
                             </div>
