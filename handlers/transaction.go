@@ -136,6 +136,12 @@ func (h *handlerTransaction) CreateTransaction2(w http.ResponseWriter, r *http.R
 	// 	Price:     price,
 	// }
 	request := transaction.CreateTransactionbyMany{}
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
 
 	validation := validator.New()
 	err := validation.Struct(request)
