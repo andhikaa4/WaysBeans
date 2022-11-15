@@ -62,7 +62,7 @@ function Profile() {
                                 <div className='w-75'>
                                     <div className='d-flex' style={{ maxWidth: "100%" }}>
                                         <div style={{ maxWidth: "20%" }} className='me-2'>
-                                            <img style={{ width: "100%", height: "auto" }} src={item.product.image} />
+                                            <img style={{ width: "100%", height: "auto" }} src={item.product[0].image} />
 
                                         </div>
                                         <div className=' w-50'>
