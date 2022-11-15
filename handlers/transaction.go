@@ -261,11 +261,13 @@ func (h *handlerTransaction) Notification(w http.ResponseWriter, r *http.Request
 			// TODO set transaction status on your database to 'success'
 			SendMail("success", transaction)
 			h.TransactionRepository.UpdateTransaction2("success", orderId)
+			h.TransactionRepository.DeleteTransaction2(models.Transaction{})
 		}
 	} else if transactionStatus == "settlement" {
 		// TODO set transaction status on your databaase to 'success'
 		SendMail("success", transaction)
 		h.TransactionRepository.UpdateTransaction2("success", orderId)
+		h.TransactionRepository.DeleteTransaction2(models.Transaction{})
 	} else if transactionStatus == "deny" {
 		// TODO you can ignore 'deny', because most of the time it allows payment retries
 		// and later can become success
