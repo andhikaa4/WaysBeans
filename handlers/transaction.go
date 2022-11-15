@@ -232,6 +232,9 @@ func convertResponseTrans(p models.Cart) models.CartResponse {
 func (h *handlerTransaction) Notification(w http.ResponseWriter, r *http.Request) {
 	var notificationPayload map[string]interface{}
 
+	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
+	userId := int(userInfo["id"].(float64))
+
 	err := json.NewDecoder(r.Body).Decode(&notificationPayload)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -261,13 +264,13 @@ func (h *handlerTransaction) Notification(w http.ResponseWriter, r *http.Request
 			// TODO set transaction status on your database to 'success'
 			SendMail("success", transaction)
 			h.TransactionRepository.UpdateTransaction2("success", orderId)
-			h.TransactionRepository.DeleteTransaction2(models.Transaction{})
+			h.TransactionRepository.DeleteTransaction2(models.Transaction{}, userId)
 		}
 	} else if transactionStatus == "settlement" {
 		// TODO set transaction status on your databaase to 'success'
 		SendMail("success", transaction)
 		h.TransactionRepository.UpdateTransaction2("success", orderId)
-		h.TransactionRepository.DeleteTransaction2(models.Transaction{})
+		h.TransactionRepository.DeleteTransaction2(models.Transaction{}, userId)
 	} else if transactionStatus == "deny" {
 		// TODO you can ignore 'deny', because most of the time it allows payment retries
 		// and later can become success
