@@ -257,7 +257,6 @@ func (h *handlerTransaction) Notification(w http.ResponseWriter, r *http.Request
 			// e.g: 'Payment status challenged. Please take action on your Merchant Administration Portal
 			SendMail("pending", transaction)
 			h.TransactionRepository.UpdateTransaction2("pending", orderId)
-
 		} else if fraudStatus == "accept" {
 			// TODO set transaction status on your database to 'success'
 			SendMail("success", transaction)
