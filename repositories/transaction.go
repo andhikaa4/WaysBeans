@@ -91,7 +91,7 @@ func (r *repository) UpdateTransaction2(status string, ID string) error {
 }
 
 func (r *repository) DeleteTransaction2(transaction models.Transaction) (models.Transaction, error) {
-	err := r.db.Delete(&transaction).Error
+	err := r.db.Model(&transaction).Delete(&transaction).Error
 
 	return transaction, err
 }
