@@ -135,7 +135,7 @@ func (h *handlerTransaction) CreateTransaction2(w http.ResponseWriter, r *http.R
 	// 	Qty:       qty,
 	// 	Price:     price,
 	// }
-	request := transaction.CreateTransactionbyMany{}
+	request := new(transaction.CreateTransactionbyMany)
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
