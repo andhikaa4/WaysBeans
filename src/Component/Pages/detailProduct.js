@@ -50,7 +50,7 @@ function DetailProduct(props) {
                     <p>Stock : {products?.stock}</p>
                     <p className='mb-4'>{products?.desc}</p>
                         <p style={{textAlign:"right"}} className='mb-5'>
-                        {toRupiah(products?.price, { dot: '.', floatingPoint: 0, Symbol:'IDR' })}
+                        {toRupiah(products?.price, { dot: '.', floatingPoint: 0 })}
                         </p>
 
                         <button onClick={() => addToCartHandler(id, products?.price)} className='btn btn-success w-100'>Add to Cart</button>
