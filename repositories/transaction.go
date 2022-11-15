@@ -15,7 +15,8 @@ type TransactionRepository interface {
 	GetTransaction2(ID int) (models.Cart, error)
 	GetOneTransaction(ID string) (models.Cart, error)
 	UpdateTransaction2(status string, ID string) error
-	DeleteTransaction2(transaction models.Transaction) (models.Transaction, error)
+	DeleteTransaction2(transaction models.Transaction, UserID int) (models.Transaction, error)
+	GetChartByUser2(userID int) (models.Transaction, error)
 }
 
 func RepositoryTransaction(db *gorm.DB) *repository {
@@ -90,8 +91,14 @@ func (r *repository) UpdateTransaction2(status string, ID string) error {
 	return err
 }
 
-func (r *repository) DeleteTransaction2(transaction models.Transaction) (models.Transaction, error) {
-	err := r.db.Raw("DELETE FROM public.transactions").Error
+func (r *repository) DeleteTransaction2(transaction models.Transaction, UserID int) (models.Transaction, error) {
+	err := r.db.Delete(&transaction, "user_id LIKE ?", UserID).Error
 
 	return transaction, err
+}
+
+func (r *repository) GetChartByUser2(userID int) (models.Transaction, error) {
+	var cart models.Transaction
+	err := r.db.Where("users_id = ? ", userID).Find(&cart).Error
+	return cart, err
 }
