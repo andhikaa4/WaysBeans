@@ -91,7 +91,7 @@ func (r *repository) UpdateTransaction2(status string, ID string) error {
 }
 
 func (r *repository) DeleteTransaction2(transaction models.Transaction, ID int) (models.Transaction, error) {
-	err := r.db.Where("buyer_id LIKE ?", ID).Delete(&transaction).Error
+	err := r.db.Where("users_id LIKE ?", ID).Delete(&transaction).Error
 
 	return transaction, err
 }
