@@ -41,11 +41,11 @@ function DetailProduct(props) {
   return (
     <div className='container px-5'>
         <div className='my-5' >
+                    {products?.length !== undefined ? (
             <div className='row'  >
                 <div className='col-6 ' >
                     <img className='mx-auto' style={{width:"100%", maxHeight:"500px" ,display:"block" }} src={products?.image} alt=""/>
                 </div>
-                    {products !== undefined && (
                 <div className='col-6 py-5'>
                     <h2>{products?.name}</h2>
                     <p>Stock : {products?.stock}</p>
@@ -56,8 +56,8 @@ function DetailProduct(props) {
 
                         <button onClick={() => addToCartHandler(id, products?.price)} className='btn btn-success w-100'>Add to Cart</button>
                 </div>
-                        )}
             </div>
+            ): null}
         </div>
         
     </div>
