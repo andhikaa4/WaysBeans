@@ -119,22 +119,23 @@ func (h *handlerTransaction) CreateTransaction2(w http.ResponseWriter, r *http.R
 	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
 	userId := int(userInfo["id"].(float64))
 
-	var productId []int
-	for _, r := range r.FormValue("product_id") {
-		if int(r-'0') >= 0 {
-			productId = append(productId, int(r-'0'))
-		}
-	}
+	// var productId []int
+	// for _, r := range r.FormValue("product_id") {
+	// 	if int(r-'0') >= 0 {
+	// 		productId = append(productId, int(r-'0'))
+	// 	}
+	// }
 
-	qty, _ := strconv.Atoi(r.FormValue("qty"))
-	price, _ := strconv.Atoi(r.FormValue("price"))
-	request := transaction.CreateTransactionbyMany{
-		BuyerID:   userId,
-		Status:    r.FormValue("status"),
-		ProductID: productId,
-		Qty:       qty,
-		Price:     price,
-	}
+	// qty, _ := strconv.Atoi(r.FormValue("qty"))
+	// price, _ := strconv.Atoi(r.FormValue("price"))
+	// request := transaction.CreateTransactionbyMany{
+	// 	BuyerID:   userId,
+	// 	Status:    r.FormValue("status"),
+	// 	ProductID: productId,
+	// 	Qty:       qty,
+	// 	Price:     price,
+	// }
+	request := transaction.CreateTransactionbyMany{}
 
 	validation := validator.New()
 	err := validation.Struct(request)
@@ -155,15 +156,15 @@ func (h *handlerTransaction) CreateTransaction2(w http.ResponseWriter, r *http.R
 		}
 	}
 
-	product, _ := h.TransactionRepository.FindProductById(productId)
+	// product, _ := h.TransactionRepository.FindProductById(productId)
 
 	transaction := models.Cart{
-		ID:      TransactionId,
-		BuyerID: userId,
-		Status:  "pending",
-		Product: product,
-		Qty:     1,
-		Price:   request.Price,
+		ID:        TransactionId,
+		BuyerID:   userId,
+		Status:    "pending",
+		ProductID: request.ProductID,
+		Qty:       1,
+		Price:     request.Price,
 	}
 
 	cart, err := h.TransactionRepository.CreateTransaction2(transaction)
