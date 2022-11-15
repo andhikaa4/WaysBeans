@@ -231,9 +231,6 @@ func convertResponseTrans(p models.Cart) models.CartResponse {
 
 func (h *handlerTransaction) Notification(w http.ResponseWriter, r *http.Request) {
 
-	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
-	userId := int(userInfo["id"].(float64))
-
 	var notificationPayload map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&notificationPayload)
